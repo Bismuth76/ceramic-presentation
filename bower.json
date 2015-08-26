@@ -2,18 +2,19 @@
   "name": "ceramic-presentation",
   "version": "1.0.0",
   "authors": [
-    "Anonymous <anonymous@example.com>"
+    "Julien Folliot",
+    "Christopher Etancelin"
   ],
-  "description": "An element providing a solution to no problem in particular.",
+  "description": "An element providing a solution to make presentation",
   "keywords": [
     "web-component",
     "web-components",
     "polymer",
-    "seed"
+    "presentation"
   ],
   "main": "ceramic-presentation.html",
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "homepage": "https://github.com/ceramic-components/ceramic-presentation/",
   "ignore": [
     "/.*",
     "/test/",
