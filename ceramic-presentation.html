@@ -10,11 +10,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 
 <!--
-An element providing a solution to no problem in particular.
+An element to make beautiful presentations.
 
 Example:
 
-    <ceramic-presentation></ceramic-presentation>
+    <ceramic-presentation>
+      <ceramic-slide>Slide 1</ceramic-slide>
+      <ceramic-slide>Slide 2</ceramic-slide>
+    </ceramic-presentation>
 
 @demo
 -->
@@ -25,23 +28,10 @@ Example:
       display: block;
       box-sizing: border-box;
     }
-
-    .author img {
-      float: left;
-      margin-right: 5px;
-      max-height: 100px;
-      max-width: 100px;
-    }
   </style>
 
   <template>
-    <h1>&lt;ceramic-presentation&gt;</h1>
-    <content></content>
-    <p class="author">
-      <img src="{{author.image}}">
-      Cheers,<br/>
-      <span class="name">{{author.name}}</span>
-    </p>
+    <content select="ceramic-slide"></content>
   </template>
 
 </dom-module>
@@ -55,35 +45,9 @@ Example:
     properties: {
 
       /**
-       * `fancy` indicates that the element should don a monocle and tophat,
-       * while checking its pocket watch.
+       * `slideCount` indicates the number of slides included into the `ceramic-presentation`
        */
-      fancy: Boolean,
-
-      /**
-       * Describes the author of the element, but is really just an excuse to
-       * show off JSDoc annotations.
-       *
-       * @type {{name: string, image: string}}
-       */
-      author: {
-        type: Object,
-        // Use `value` to provides a default value for a property, by setting it
-        // on your element's prototype.
-        //
-        // If you provide a function, as we do here, Polymer will call that
-        // _per element instance_.
-        //
-        // We do that to ensure that each element gets its own copy of the
-        // value, rather than having it shared across all instances (via the
-        // prototype).
-        value: function() {
-          return {
-            name:  'Dimitri Glazkov',
-            image: 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg',
-          };
-        }
-      },
+      slideCount: Number
 
     },
 
@@ -96,6 +60,11 @@ Example:
       //
       // This is the point where you should make modifications to the DOM (when
       // necessary), or kick off any processes the element wants to perform.
+      var self = this;
+      this.async(function() {
+        var content = Polymer.dom(self.root).querySelector('content');
+        self.slideCount = Polymer.dom(content).getDistributedNodes().length;
+      });
     },
 
     attached: function() {
@@ -129,9 +98,8 @@ Example:
      * @param {string} greeting A positive greeting.
      * @return {string} The full greeting.
      */
-    sayHello: function(greeting) {
-      var response = greeting || 'Hello World!';
-      return 'ceramic-presentation says, ' + response;
+    sayHello: function() {
+      return 'Slide count = ' + this.slideCount;
     },
 
     /**
