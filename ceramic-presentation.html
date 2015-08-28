@@ -48,34 +48,41 @@ Example:
              * `slideCount` indicates the number of slides included into the `ceramic-presentation`
              */
             slideCount: Number,
+
+            /**
+             * `currentSlideIndex` indicates the index of current active slide
+             */
             currentSlideIndex: {
                 type: Number,
                 value: 1
             },
+
+            /**
+             * `infinite` indicates if the slides loop
+             */
             infinite: {
                 type: Boolean,
                 value: false
             },
+
+            /**
+             * `nextSlideIndex` indicates the next slide index
+             */
             nextSlideIndex: {
                 type: Number,
                 computed: 'getNextSlide(currentSlideIndex,slideCount,infinite)'
             },
+
+            /**
+             * `prevSlideIndex` indicates the previous slide index
+             */
             prevSlideIndex: {
                 type: Number,
                 computed: 'getPrevSlide(currentSlideIndex,slideCount,infinite)'
             }
         },
 
-        // Element Lifecycle
-
         ready: function () {
-            // `ready` is called after all elements have been configured, but
-            // propagates bottom-up. This element's children are ready, but parents
-            // are not.
-            //
-            // This is the point where you should make modifications to the DOM (when
-            // necessary), or kick off any processes the element wants to perform.
-
             var self = this;
             this.async(function () {
                 var content = Polymer.dom(self.root).querySelector('content');
@@ -84,35 +91,10 @@ Example:
 
         },
 
-        attached: function () {
-            // `attached` fires once the element and its parents have been inserted
-            // into a document.
-            //
-            // This is a good place to perform any work related to your element's
-            // visual state or active behavior (measuring sizes, beginning animations,
-            // loading resources, etc).
-        },
+        attached: function () {},
 
-        detached: function () {
-            // The analog to `attached`, `detached` fires when the element has been
-            // removed from a document.
-            //
-            // Use this to clean up anything you did in `attached`.
-        },
+        detached: function () {},
 
-        /**
-         * The `ceramic-presentation-lasers` event is fired whenever `fireLasers` is called.
-         *
-         * @event ceramic-presentation-lasers
-         * @detail {{sound: String}}
-         */
-
-        /**
-         * Sometimes it's just nice to say hi.
-         *
-         * @param {string} greeting A positive greeting.
-         * @return {string} The full greeting.
-         */
         getSlideCount: function () {
             return 'Slide count = ' + this.slideCount;
         },
@@ -134,7 +116,6 @@ Example:
             return v_nextSlideIndex;
         },
 
-
         getPrevSlide: function (currentSlideIndex, slideCount, infinite) {
             var v_prevSlideIndex = null;
 
@@ -147,11 +128,17 @@ Example:
             return v_prevSlideIndex;
         },
 
+        /**
+         * Move to next slide
+         */
         nextSlide: function () {
             if (this.nextSlideIndex != undefined)
                 this.currentSlideIndex++;
         },
 
+        /**
+         * Move to previous slide
+         */
         prevSlide: function () {
             if (this.prevSlideIndex != undefined)
                 this.currentSlideIndex--;
