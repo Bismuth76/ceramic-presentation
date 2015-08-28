@@ -9,44 +9,44 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>ceramic-presentation Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../ceramic-presentation.html">
-  </head>
-  <body>
-    <p>An example of <code>&lt;ceramic-presentation&gt;</code>:</p>
+</head>
+<body>
+<p>An example of <code>&lt;ceramic-presentation&gt;</code>:</p>
 
-	<button>Get Var</button>
-	<button onclick="_onPrevClick()"> slide prec</button>
-	<button onclick="_onNextClick()"> slide suivante</button>
-    <ceramic-presentation>
-      <ceramic-slide>Slide 1</ceramic-slide>
-	  <ceramic-slide>Slide 2</ceramic-slide>
-	  <ceramic-slide>Slide 3</ceramic-slide>
-    </ceramic-presentation>
-    <script>
-		presentation = document.querySelector('ceramic-presentation');
-		function _onNextClick() { 
-		presentation.nextSlide();
-		}
-		
-		function _onPrevClick() { 
-		presentation.prevSlide();
-		}
-      document.querySelector('button').addEventListener('click', function() {
-	    
+<button>Get Var</button>
+<button onclick="_onPrevClick()"> slide prec</button>
+<button onclick="_onNextClick()"> slide suivante</button>
+<ceramic-presentation>
+    <ceramic-slide>Slide 1</ceramic-slide>
+    <ceramic-slide>Slide 2</ceramic-slide>
+    <ceramic-slide>Slide 3</ceramic-slide>
+</ceramic-presentation>
+<script>
+    presentation = document.querySelector('ceramic-presentation');
+    function _onNextClick() {
+        presentation.nextSlide();
+    }
+
+    function _onPrevClick() {
+        presentation.prevSlide();
+    }
+    document.querySelector('button').addEventListener('click', function () {
+
         alert(presentation.getSlideCount());
-		alert(presentation.getCurrentSlide());
-		alert(presentation.nextSlideIndex);
-		alert(presentation.prevSlideIndex);
-		presentation.fireLasers();
-      });
-	  
-	
-    </script>
+        alert(presentation.getCurrentSlide());
+        alert(presentation.nextSlideIndex);
+        alert(presentation.prevSlideIndex);
+        presentation.fireLasers();
+    });
 
-  </body>
+
+</script>
+
+</body>
 </html>

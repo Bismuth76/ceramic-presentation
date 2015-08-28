@@ -23,150 +23,150 @@ Example:
 -->
 <dom-module id="ceramic-presentation">
 
-  <style>
-    :host {
-      display: block;
-      box-sizing: border-box;
-    }
-  </style>
+    <style>
+        :host {
+            display: block;
+            box-sizing: border-box;
+        }
+    </style>
 
-  <template>
-    <content select="ceramic-slide">test</content>
-  </template>
+    <template>
+        <content select="ceramic-slide">test</content>
+    </template>
 
 </dom-module>
 
 <script>
 
-  Polymer({
+    Polymer({
 
-    is: 'ceramic-presentation',
+        is: 'ceramic-presentation',
 
-    properties: {
+        properties: {
 
-      /**
-       * `slideCount` indicates the number of slides included into the `ceramic-presentation`
-       */
-      slideCount: Number,
-	  currentSlideIndex: {
-	  type: Number,
-	  value: 1
-	  },
-	  infinite: {
-	  type: Boolean,
-	  value: false
-	  },
-	  nextSlideIndex: {
-	  type: Number,
-	  computed: 'getNextSlide(currentSlideIndex,slideCount,infinite)'
-	  },
-	  prevSlideIndex: {
-	  type: Number,
-	  computed: 'getPrevSlide(currentSlideIndex,slideCount,infinite)'
-	  }
-    },
+            /**
+             * `slideCount` indicates the number of slides included into the `ceramic-presentation`
+             */
+            slideCount: Number,
+            currentSlideIndex: {
+                type: Number,
+                value: 1
+            },
+            infinite: {
+                type: Boolean,
+                value: false
+            },
+            nextSlideIndex: {
+                type: Number,
+                computed: 'getNextSlide(currentSlideIndex,slideCount,infinite)'
+            },
+            prevSlideIndex: {
+                type: Number,
+                computed: 'getPrevSlide(currentSlideIndex,slideCount,infinite)'
+            }
+        },
 
-    // Element Lifecycle
+        // Element Lifecycle
 
-    ready: function() {
-      // `ready` is called after all elements have been configured, but
-      // propagates bottom-up. This element's children are ready, but parents
-      // are not.
-      //
-      // This is the point where you should make modifications to the DOM (when
-      // necessary), or kick off any processes the element wants to perform.
-	 
-      var self = this;
-      this.async(function() {
+        ready: function () {
+            // `ready` is called after all elements have been configured, but
+            // propagates bottom-up. This element's children are ready, but parents
+            // are not.
+            //
+            // This is the point where you should make modifications to the DOM (when
+            // necessary), or kick off any processes the element wants to perform.
 
-		self.infinite = false;
-        var content = Polymer.dom(self.root).querySelector('content');
-        self.slideCount = Polymer.dom(content).getDistributedNodes().length;
-		});	
-      
-    },
+            var self = this;
+            this.async(function () {
 
-    attached: function() {
-      // `attached` fires once the element and its parents have been inserted
-      // into a document.
-      //
-      // This is a good place to perform any work related to your element's
-      // visual state or active behavior (measuring sizes, beginning animations,
-      // loading resources, etc).
-    },
+                self.infinite = false;
+                var content = Polymer.dom(self.root).querySelector('content');
+                self.slideCount = Polymer.dom(content).getDistributedNodes().length;
+            });
 
-    detached: function() {
-      // The analog to `attached`, `detached` fires when the element has been
-      // removed from a document.
-      //
-      // Use this to clean up anything you did in `attached`.
-    },
+        },
 
-    /**
-     * The `ceramic-presentation-lasers` event is fired whenever `fireLasers` is called.
-     *
-     * @event ceramic-presentation-lasers
-     * @detail {{sound: String}}
-     */
+        attached: function () {
+            // `attached` fires once the element and its parents have been inserted
+            // into a document.
+            //
+            // This is a good place to perform any work related to your element's
+            // visual state or active behavior (measuring sizes, beginning animations,
+            // loading resources, etc).
+        },
 
-    /**
-     * Sometimes it's just nice to say hi.
-     *
-     * @param {string} greeting A positive greeting.
-     * @return {string} The full greeting.
-     */
-    getSlideCount: function() {
-      return 'Slide count = ' + this.slideCount;
-    },
+        detached: function () {
+            // The analog to `attached`, `detached` fires when the element has been
+            // removed from a document.
+            //
+            // Use this to clean up anything you did in `attached`.
+        },
 
-    /**
-     * Attempts to destroy this element's enemies with an any beam of light!
-     *
-     * Or, at least, dispatches an event in the vain hope that someone else will
-     * do the zapping.
-     */
-    fireLasers: function() {
-      this.fire('ceramic-presentation-lasers', {sound: 'Pew pew!'});
-    },
+        /**
+         * The `ceramic-presentation-lasers` event is fired whenever `fireLasers` is called.
+         *
+         * @event ceramic-presentation-lasers
+         * @detail {{sound: String}}
+         */
 
-	getCurrentSlide: function(){
-		return 'currentSlideIndex = ' + this.currentSlideIndex;	
-		},
-	
-	getNextSlide: function(currentSlideIndex,slideCount,infinite){
-		var v_nextSlideIndex = null;
-		
-			if(currentSlideIndex==slideCount){
-				v_nextSlideIndex = (infinite==true) ? 1 : v_nextSlideIndex;
-			
-			}else{
-				v_nextSlideIndex = currentSlideIndex + 1 ; 
-				
-			}
+        /**
+         * Sometimes it's just nice to say hi.
+         *
+         * @param {string} greeting A positive greeting.
+         * @return {string} The full greeting.
+         */
+        getSlideCount: function () {
+            return 'Slide count = ' + this.slideCount;
+        },
 
-		return v_nextSlideIndex;
-	},
-	
-		
-	getPrevSlide: function(currentSlideIndex,slideCount,infinite){
-		var v_prevSlideIndex = null;
-			if(currentSlideIndex == 1){
-				v_prevSlideIndex = (infinite==true) ? slideCount : v_prevSlideIndex;
-			}else{
-				v_prevSlideIndex = currentSlideIndex - 1;
-			}
-		return v_prevSlideIndex;
-	},
-	
-	nextSlide: function(){
-		if(this.nextSlideIndex != undefined)
-		this.currentSlideIndex ++;
-	},
-	
-	prevSlide: function(){
-		if(this.prevSlideIndex != undefined)
-		this.currentSlideIndex -- ;
-	}
-  });
+        /**
+         * Attempts to destroy this element's enemies with an any beam of light!
+         *
+         * Or, at least, dispatches an event in the vain hope that someone else will
+         * do the zapping.
+         */
+        fireLasers: function () {
+            this.fire('ceramic-presentation-lasers', {sound: 'Pew pew!'});
+        },
+
+        getCurrentSlide: function () {
+            return 'currentSlideIndex = ' + this.currentSlideIndex;
+        },
+
+        getNextSlide: function (currentSlideIndex, slideCount, infinite) {
+            var v_nextSlideIndex = null;
+
+            if (currentSlideIndex == slideCount) {
+                v_nextSlideIndex = (infinite == true) ? 1 : v_nextSlideIndex;
+
+            } else {
+                v_nextSlideIndex = currentSlideIndex + 1;
+
+            }
+
+            return v_nextSlideIndex;
+        },
+
+
+        getPrevSlide: function (currentSlideIndex, slideCount, infinite) {
+            var v_prevSlideIndex = null;
+            if (currentSlideIndex == 1) {
+                v_prevSlideIndex = (infinite == true) ? slideCount : v_prevSlideIndex;
+            } else {
+                v_prevSlideIndex = currentSlideIndex - 1;
+            }
+            return v_prevSlideIndex;
+        },
+
+        nextSlide: function () {
+            if (this.nextSlideIndex != undefined)
+                this.currentSlideIndex++;
+        },
+
+        prevSlide: function () {
+            if (this.prevSlideIndex != undefined)
+                this.currentSlideIndex--;
+        }
+    });
 
 </script>
