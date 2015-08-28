@@ -117,16 +117,6 @@ Example:
             return 'Slide count = ' + this.slideCount;
         },
 
-        /**
-         * Attempts to destroy this element's enemies with an any beam of light!
-         *
-         * Or, at least, dispatches an event in the vain hope that someone else will
-         * do the zapping.
-         */
-        fireLasers: function () {
-            this.fire('ceramic-presentation-lasers', {sound: 'Pew pew!'});
-        },
-
         getCurrentSlide: function () {
             return 'currentSlideIndex = ' + this.currentSlideIndex;
         },
