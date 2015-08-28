@@ -124,16 +124,14 @@ Example:
          * Move to next slide
          */
         nextSlide: function () {
-            if (this.nextSlideIndex != undefined)
-                this.currentSlideIndex++;
+            this.currentSlide = this._getNextSlide(this.currentSlideIndex, this.slideCount, this.infinite);
         },
 
         /**
          * Move to previous slide
          */
         previousSlide: function () {
-            if (this.prevSlideIndex != undefined)
-                this.currentSlideIndex--;
+            this.currentSlide = this._getPreviousSlide(this.currentSlideIndex, this.slideCount, this.infinite);
         }
     });
 
