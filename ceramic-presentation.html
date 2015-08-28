@@ -134,12 +134,11 @@ Example:
         getNextSlide: function (currentSlideIndex, slideCount, infinite) {
             var v_nextSlideIndex = null;
 
-            if (currentSlideIndex == slideCount) {
-                v_nextSlideIndex = (infinite == true) ? 1 : v_nextSlideIndex;
+            if (currentSlideIndex === slideCount) {
+                v_nextSlideIndex = infinite ? 1 : v_nextSlideIndex;
 
             } else {
                 v_nextSlideIndex = currentSlideIndex + 1;
-
             }
 
             return v_nextSlideIndex;
@@ -148,11 +147,13 @@ Example:
 
         getPrevSlide: function (currentSlideIndex, slideCount, infinite) {
             var v_prevSlideIndex = null;
-            if (currentSlideIndex == 1) {
-                v_prevSlideIndex = (infinite == true) ? slideCount : v_prevSlideIndex;
+
+            if (currentSlideIndex === 1) {
+                v_prevSlideIndex = infinite ? slideCount : v_prevSlideIndex;
             } else {
                 v_prevSlideIndex = currentSlideIndex - 1;
             }
+
             return v_prevSlideIndex;
         },
 
