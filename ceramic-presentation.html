@@ -47,14 +47,19 @@ Example:
             /**
              * `slideCount` indicates the number of slides included into the `ceramic-presentation`
              */
-            slideCount: Number,
+            slideCount: {
+                type: Number,
+                value: 0,
+                notify: true
+            },
 
             /**
              * `currentSlideIndex` indicates the index of current active slide
              */
             currentSlideIndex: {
                 type: Number,
-                value: 1
+                value: 1,
+                notify: true
             },
 
             /**
@@ -62,7 +67,8 @@ Example:
              */
             infinite: {
                 type: Boolean,
-                value: false
+                value: false,
+                notify: true
             },
 
             /**
@@ -70,7 +76,8 @@ Example:
              */
             nextSlideIndex: {
                 type: Number,
-                computed: '_getNextSlide(currentSlideIndex,slideCount,infinite)'
+                computed: '_getNextSlide(currentSlideIndex,slideCount,infinite)',
+                notify: true
             },
 
             /**
@@ -78,7 +85,8 @@ Example:
              */
             previousSlideIndex: {
                 type: Number,
-                computed: '_getPreviousSlide(currentSlideIndex,slideCount,infinite)'
+                computed: '_getPreviousSlide(currentSlideIndex,slideCount,infinite)',
+                notify: true
             }
         },
 
