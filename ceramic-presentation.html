@@ -132,14 +132,14 @@ Example:
          * Move to next slide
          */
         nextSlide: function () {
-            this.currentSlide = this._getNextSlide(this.currentSlideIndex, this.slideCount, this.infinite);
+            this.set('currentSlideIndex', this._getNextSlide(this.currentSlideIndex, this.slideCount, this.infinite));
         },
 
         /**
          * Move to previous slide
          */
         previousSlide: function () {
-            this.currentSlide = this._getPreviousSlide(this.currentSlideIndex, this.slideCount, this.infinite);
+            this.set('currentSlideIndex', this._getPreviousSlide(this.currentSlideIndex, this.slideCount, this.infinite));
         }
     });
 
