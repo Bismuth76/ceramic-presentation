@@ -17,34 +17,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../ceramic-presentation.html">
 </head>
 <body>
+
 <p>An example of <code>&lt;ceramic-presentation&gt;</code>:</p>
 
-<button>Get Var</button>
-<button onclick="_onPrevClick()"> slide prec</button>
-<button onclick="_onNextClick()"> slide suivante</button>
-<ceramic-presentation>
-    <ceramic-slide>Slide 1</ceramic-slide>
-    <ceramic-slide>Slide 2</ceramic-slide>
-    <ceramic-slide>Slide 3</ceramic-slide>
-</ceramic-presentation>
-<script>
-    presentation = document.querySelector('ceramic-presentation');
-    function _onNextClick() {
-        presentation.nextSlide();
-    }
+<template is="dom-bind" id="demo">
+    <style>
+        :host {
+            display: block;
+            box-sizing: border-box;
+        }
+    </style>
+    <button onclick="_onPrevClick()"> slide prec</button>
+    <button onclick="_onNextClick()"> slide suivante</button>
+    <ceramic-presentation
+            slide-count="{{demoSlideCount}}"
+            current-slide-index="{{demoCurrentSlideIndex}}"
+            next-slide-index="{{demoNextSlideIndex}}"
+            previous-slide-index="{{demoPreviousSlideIndex}}"
+            >
+        <ceramic-slide>Slide 1</ceramic-slide>
+        <ceramic-slide>Slide 2</ceramic-slide>
+        <ceramic-slide>Slide 3</ceramic-slide>
+    </ceramic-presentation>
+    <dl>
+        <dt>Total slides</dt>
+        <dd>{{demoSlideCount}}</dd>
+    </dl>
+    <dl>
+        <dt>Current slide</dt>
+        <dd>{{demoCurrentSlideIndex}}</dd>
+    </dl>
+    <dl>
+        <dt>Previous slide</dt>
+        <dd>{{demoPreviousSlideIndex}}</dd>
+    </dl>
+    <dl>
+        <dt>Next slide</dt>
+        <dd>{{demoNextSlideIndex}}</dd>
+    </dl>
+    <script>
+        function _onNextClick() {
+            document.querySelector('ceramic-presentation').nextSlide();
+        }
 
-    function _onPrevClick() {
-        presentation.previousSlide();
-    }
-    document.querySelector('button').addEventListener('click', function () {
-        alert(presentation.slideCount);
-        alert(presentation.currentSlideIndex);
-        alert(presentation.nextSlideIndex);
-        alert(presentation.previousSlideIndex);
-    });
-
-
-</script>
+        function _onPrevClick() {
+            document.querySelector('ceramic-presentation').previousSlide();
+        }
+    </script>
+</template>
 
 </body>
 </html>
