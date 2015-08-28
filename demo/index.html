@@ -17,20 +17,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../ceramic-presentation.html">
   </head>
   <body>
-
     <p>An example of <code>&lt;ceramic-presentation&gt;</code>:</p>
 
-    <button>Say Something</button>
-
+	<button>Get Var</button>
+	<button onclick="_onPrevClick()"> slide prec</button>
+	<button onclick="_onNextClick()"> slide suivante</button>
     <ceramic-presentation>
       <ceramic-slide>Slide 1</ceramic-slide>
-      <ceramic-slide>Slide 2</ceramic-slide>
+	  <ceramic-slide>Slide 2</ceramic-slide>
+	  <ceramic-slide>Slide 3</ceramic-slide>
     </ceramic-presentation>
-
     <script>
+		presentation = document.querySelector('ceramic-presentation');
+		function _onNextClick() { 
+		presentation.nextSlide();
+		}
+		
+		function _onPrevClick() { 
+		presentation.prevSlide();
+		}
       document.querySelector('button').addEventListener('click', function() {
-        alert(document.querySelector('ceramic-presentation').sayHello('Hallo!'));
+	    
+        alert(presentation.getSlideCount());
+		alert(presentation.getCurrentSlide());
+		alert(presentation.nextSlideIndex);
+		alert(presentation.prevSlideIndex);
+		presentation.fireLasers();
       });
+	  
+	
     </script>
 
   </body>
