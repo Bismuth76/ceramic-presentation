@@ -34,13 +34,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     function _onPrevClick() {
-        presentation.prevSlide();
+        presentation.previousSlide();
     }
     document.querySelector('button').addEventListener('click', function () {
-        alert(presentation.getSlideCount());
-        alert(presentation.getCurrentSlide());
+        alert(presentation.slideCount);
+        alert(presentation.currentSlideIndex);
         alert(presentation.nextSlideIndex);
-        alert(presentation.prevSlideIndex);
+        alert(presentation.previousSlideIndex);
     });
 
 

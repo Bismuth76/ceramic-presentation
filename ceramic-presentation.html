@@ -70,15 +70,15 @@ Example:
              */
             nextSlideIndex: {
                 type: Number,
-                computed: 'getNextSlide(currentSlideIndex,slideCount,infinite)'
+                computed: '_getNextSlide(currentSlideIndex,slideCount,infinite)'
             },
 
             /**
              * `prevSlideIndex` indicates the previous slide index
              */
-            prevSlideIndex: {
+            previousSlideIndex: {
                 type: Number,
-                computed: 'getPrevSlide(currentSlideIndex,slideCount,infinite)'
+                computed: '_getPreviousSlide(currentSlideIndex,slideCount,infinite)'
             }
         },
 
@@ -95,15 +95,7 @@ Example:
 
         detached: function () {},
 
-        getSlideCount: function () {
-            return 'Slide count = ' + this.slideCount;
-        },
-
-        getCurrentSlide: function () {
-            return 'currentSlideIndex = ' + this.currentSlideIndex;
-        },
-
-        getNextSlide: function (currentSlideIndex, slideCount, infinite) {
+        _getNextSlide: function (currentSlideIndex, slideCount, infinite) {
             var v_nextSlideIndex = null;
 
             if (currentSlideIndex === slideCount) {
@@ -116,7 +108,7 @@ Example:
             return v_nextSlideIndex;
         },
 
-        getPrevSlide: function (currentSlideIndex, slideCount, infinite) {
+        _getPrevSlide: function (currentSlideIndex, slideCount, infinite) {
             var v_prevSlideIndex = null;
 
             if (currentSlideIndex === 1) {
@@ -139,7 +131,7 @@ Example:
         /**
          * Move to previous slide
          */
-        prevSlide: function () {
+        previousSlide: function () {
             if (this.prevSlideIndex != undefined)
                 this.currentSlideIndex--;
         }
