@@ -78,8 +78,6 @@ Example:
 
             var self = this;
             this.async(function () {
-
-                self.infinite = false;
                 var content = Polymer.dom(self.root).querySelector('content');
                 self.slideCount = Polymer.dom(content).getDistributedNodes().length;
             });
