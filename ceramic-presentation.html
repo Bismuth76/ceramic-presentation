@@ -31,7 +31,7 @@ Example:
   </style>
 
   <template>
-    <content select="ceramic-slide"></content>
+    <content select="ceramic-slide">test</content>
   </template>
 
 </dom-module>
@@ -47,8 +47,23 @@ Example:
       /**
        * `slideCount` indicates the number of slides included into the `ceramic-presentation`
        */
-      slideCount: Number
-
+      slideCount: Number,
+	  currentSlideIndex: {
+	  type: Number,
+	  value: 1
+	  },
+	  infinite: {
+	  type: Boolean,
+	  value: false
+	  },
+	  nextSlideIndex: {
+	  type: Number,
+	  computed: 'getNextSlide(currentSlideIndex,slideCount,infinite)'
+	  },
+	  prevSlideIndex: {
+	  type: Number,
+	  computed: 'getPrevSlide(currentSlideIndex,slideCount,infinite)'
+	  }
     },
 
     // Element Lifecycle
@@ -60,11 +75,15 @@ Example:
       //
       // This is the point where you should make modifications to the DOM (when
       // necessary), or kick off any processes the element wants to perform.
+	 
       var self = this;
       this.async(function() {
+
+		self.infinite = false;
         var content = Polymer.dom(self.root).querySelector('content');
         self.slideCount = Polymer.dom(content).getDistributedNodes().length;
-      });
+		});	
+      
     },
 
     attached: function() {
@@ -83,8 +102,6 @@ Example:
       // Use this to clean up anything you did in `attached`.
     },
 
-    // Element Behavior
-
     /**
      * The `ceramic-presentation-lasers` event is fired whenever `fireLasers` is called.
      *
@@ -98,7 +115,7 @@ Example:
      * @param {string} greeting A positive greeting.
      * @return {string} The full greeting.
      */
-    sayHello: function() {
+    getSlideCount: function() {
       return 'Slide count = ' + this.slideCount;
     },
 
@@ -110,8 +127,46 @@ Example:
      */
     fireLasers: function() {
       this.fire('ceramic-presentation-lasers', {sound: 'Pew pew!'});
-    }
+    },
 
+	getCurrentSlide: function(){
+		return 'currentSlideIndex = ' + this.currentSlideIndex;	
+		},
+	
+	getNextSlide: function(currentSlideIndex,slideCount,infinite){
+		var v_nextSlideIndex = null;
+		
+			if(currentSlideIndex==slideCount){
+				v_nextSlideIndex = (infinite==true) ? 1 : v_nextSlideIndex;
+			
+			}else{
+				v_nextSlideIndex = currentSlideIndex + 1 ; 
+				
+			}
+
+		return v_nextSlideIndex;
+	},
+	
+		
+	getPrevSlide: function(currentSlideIndex,slideCount,infinite){
+		var v_prevSlideIndex = null;
+			if(currentSlideIndex == 1){
+				v_prevSlideIndex = (infinite==true) ? slideCount : v_prevSlideIndex;
+			}else{
+				v_prevSlideIndex = currentSlideIndex - 1;
+			}
+		return v_prevSlideIndex;
+	},
+	
+	nextSlide: function(){
+		if(this.nextSlideIndex != undefined)
+		this.currentSlideIndex ++;
+	},
+	
+	prevSlide: function(){
+		if(this.prevSlideIndex != undefined)
+		this.currentSlideIndex -- ;
+	}
   });
 
 </script>
