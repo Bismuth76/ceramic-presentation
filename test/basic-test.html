@@ -35,14 +35,17 @@
         suite('Initial slideCount', function() {
 
             test('0 slides', function () {
+                flush();
                 assert.equal(presentation.slideCount, 0);
             });
 
             test('1 slide', function () {
+                flush();
                 assert.equal(presentation1Slide.slideCount, 1);
             });
 
             test('2 slides', function () {
+                flush();
                 assert.equal(presentation2Slides.slideCount, 2);
             });
         });
