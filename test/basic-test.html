@@ -1,15 +1,6 @@
 <!doctype html>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
@@ -18,38 +9,224 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Step 1: import the element to test -->
     <link rel="import" href="../ceramic-presentation.html">
-  </head>
-  <body>
+</head>
+<body>
 
-    <!-- You can use the document as a place to set up your fixtures. -->
-    <ceramic-presentation></ceramic-presentation>
+<!-- You can use the document as a place to set up your fixtures. -->
+<ceramic-presentation id="c0-slides"></ceramic-presentation>
 
-    <script>
-      var myEl = document.querySelector('ceramic-presentation');
+<ceramic-presentation id="c1-slide">
+    <ceramic-slide></ceramic-slide>
+</ceramic-presentation>
 
-      suite('<ceramic-presentation>', function() {
+<ceramic-presentation id="c2-slides">
+    <ceramic-slide></ceramic-slide>
+    <ceramic-slide></ceramic-slide>
+</ceramic-presentation>
 
-        test('defines the "author" property', function() {
-          assert.equal(myEl.author.name, 'Dimitri Glazkov');
-          assert.equal(myEl.author.image, 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg');
+
+<script>
+    var presentation = document.querySelector('#c0-slides');
+    var presentation1Slide = document.querySelector('#c1-slide');
+    var presentation2Slides = document.querySelector('#c2-slides');
+
+    suite('<ceramic-presentation>', function () {
+
+        suite('Initial slideCount', function() {
+
+            test('0 slides', function () {
+                assert.equal(presentation.slideCount, 0);
+            });
+
+            test('1 slide', function () {
+                assert.equal(presentation1Slide.slideCount, 1);
+            });
+
+            test('2 slides', function () {
+                assert.equal(presentation2Slides.slideCount, 2);
+            });
         });
 
-        test('says hello', function() {
-          assert.equal(myEl.sayHello(), 'ceramic-presentation says, Hello World!');
+        suite('_getNextSlide', function() {
 
-          var greetings = myEl.sayHello('greetings Earthlings');
-          assert.equal(greetings, 'ceramic-presentation says, greetings Earthlings');
+            suite('Infinite', function() {
+
+                suite('0 slides', function() {
+
+                   test('Current Slide Index 0 (not exists)', function() {
+                       assert.equal(presentation._getNextSlide(0, 0, true), null);
+                   }) ;
+                });
+
+                suite('1 slide', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getNextSlide(0, 1, true), 0);
+                    });
+                });
+
+                suite('2 slides', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getNextSlide(0, 2, true), 1);
+                    });
+
+                    test('Current Slide Index 1', function() {
+                        assert.equal(presentation._getNextSlide(1, 2, true), 0);
+                    });
+                });
+
+                suite('5 slides', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getNextSlide(0, 5, true), 1);
+                    });
+
+                    test('Current Slide Index 1', function() {
+                        assert.equal(presentation._getNextSlide(1, 5, true), 2);
+                    });
+
+                    test('Current Slide Index 4', function() {
+                        assert.equal(presentation._getNextSlide(4, 5, true), 0);
+                    });
+                });
+            });
+
+            suite('Not infinite', function() {
+
+                suite('0 slides', function() {
+
+                    test('Current Slide Index 0 (not exists)', function() {
+                        assert.equal(presentation._getNextSlide(0, 0, false), null);
+                    });
+                });
+
+                suite('1 slide', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getNextSlide(0, 1, false), null);
+                    });
+                });
+
+                suite('2 slides', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getNextSlide(0, 2, false), 1);
+                    });
+
+                    test('Current Slide Index 1', function() {
+                        assert.equal(presentation._getNextSlide(1, 2, false), null);
+                    });
+                });
+
+                suite('5 slides', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getNextSlide(0, 5, false), 1);
+                    });
+
+                    test('Current Slide Index 1', function() {
+                        assert.equal(presentation._getNextSlide(1, 5, false), 2);
+                    }) ;
+
+                    test('Current Slide Index 4', function() {
+                        assert.equal(presentation._getNextSlide(4, 5, false), null);
+                    });
+                });
+            });
         });
 
-        test('fires lasers', function(done) {
-          myEl.addEventListener('ceramic-presentation-lasers', function(event) {
-            assert.equal(event.detail.sound, 'Pew pew!');
-            done();
-          });
+        suite('_getPreviousSlide', function() {
+
+            suite('Infinite', function() {
+
+                suite('0 slides', function() {
+
+                    test('Current Slide Index 0 (not exists)', function() {
+                        assert.equal(presentation._getPreviousSlide(0, 0, true), null);
+                    }) ;
+                });
+
+                suite('1 slide', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getPreviousSlide(0, 1, true), 0);
+                    });
+                });
+
+                suite('2 slides', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getPreviousSlide(0, 2, true), 1);
+                    });
+
+                    test('Current Slide Index 1', function() {
+                        assert.equal(presentation._getPreviousSlide(1, 2, true), 0);
+                    });
+                });
+
+                suite('5 slides', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getPreviousSlide(0, 5, true), 4);
+                    });
+
+                    test('Current Slide Index 1', function() {
+                        assert.equal(presentation._getPreviousSlide(1, 5, true), 0);
+                    });
+
+                    test('Current Slide Index 2', function() {
+                        assert.equal(presentation._getPreviousSlide(2, 5, true), 1);
+                    });
+                });
+            });
+
+            suite('Not infinite', function() {
+
+                suite('0 slides', function() {
+
+                    test('Current Slide Index 0 (not exists)', function() {
+                        assert.equal(presentation._getPreviousSlide(0, 0, false), null);
+                    });
+                });
+
+                suite('1 slide', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getPreviousSlide(0, 1, false), null);
+                    });
+                });
+
+                suite('2 slides', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getPreviousSlide(0, 2, false), null);
+                    });
+
+                    test('Current Slide Index 1', function() {
+                        assert.equal(presentation._getPreviousSlide(1, 2, false), 0);
+                    });
+                });
+
+                suite('5 slides', function() {
+
+                    test('Current Slide Index 0', function() {
+                        assert.equal(presentation._getPreviousSlide(0, 5, false), null);
+                    });
+
+                    test('Current Slide Index 1', function() {
+                        assert.equal(presentation._getPreviousSlide(1, 5, false), 0);
+                    }) ;
+
+                    test('Current Slide Index 2', function() {
+                        assert.equal(presentation._getPreviousSlide(2, 5, false), 1);
+                    });
+                });
+            });
         });
 
-      });
-    </script>
+    });
+</script>
 
-  </body>
+</body>
 </html>
