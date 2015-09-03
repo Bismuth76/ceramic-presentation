@@ -94,7 +94,7 @@ Example:
             var self = this;
             this.async(function () {
                 var content = Polymer.dom(self.root).querySelector('content');
-                self.slideCount = Polymer.dom(content).getDistributedNodes().length;
+                self.set('slideCount', Polymer.dom(content).getDistributedNodes().length);
             });
 
         },
