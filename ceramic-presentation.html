@@ -58,7 +58,7 @@ Example:
              */
             currentSlideIndex: {
                 type: Number,
-                value: 1,
+                value: 0,
                 notify: true
             },
 
@@ -106,8 +106,8 @@ Example:
         _getNextSlide: function (currentSlideIndex, slideCount, infinite) {
             var v_nextSlideIndex = null;
 
-            if (currentSlideIndex === slideCount) {
-                v_nextSlideIndex = infinite ? 1 : v_nextSlideIndex;
+            if (currentSlideIndex === slideCount -1) {
+                v_nextSlideIndex = infinite ? 0 : v_nextSlideIndex;
 
             } else {
                 v_nextSlideIndex = currentSlideIndex + 1;
@@ -119,8 +119,8 @@ Example:
         _getPreviousSlide: function (currentSlideIndex, slideCount, infinite) {
             var v_prevSlideIndex = null;
 
-            if (currentSlideIndex === 1) {
-                v_prevSlideIndex = infinite ? slideCount : v_prevSlideIndex;
+            if (currentSlideIndex === 0) {
+                v_prevSlideIndex = infinite ? slideCount - 1 : v_prevSlideIndex;
             } else {
                 v_prevSlideIndex = currentSlideIndex - 1;
             }
@@ -132,14 +132,14 @@ Example:
          * Move to next slide
          */
         nextSlide: function () {
-            this.set('currentSlideIndex', this._getNextSlide(this.currentSlideIndex, this.slideCount, this.infinite) || this.slideCount);
+            this.set('currentSlideIndex', this._getNextSlide(this.currentSlideIndex, this.slideCount, this.infinite) || this.slideCount - 1);
         },
 
         /**
          * Move to previous slide
          */
         previousSlide: function () {
-            this.set('currentSlideIndex', this._getPreviousSlide(this.currentSlideIndex, this.slideCount, this.infinite) || 1);
+            this.set('currentSlideIndex', this._getPreviousSlide(this.currentSlideIndex, this.slideCount, this.infinite) || 0);
         }
     });
 
