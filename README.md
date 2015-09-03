@@ -1,4 +1,4 @@
-# ceramic-presentation
+# ceramic-presentation [![Build Status](https://travis-ci.org/ceramic-components/ceramic-presentation.svg?branch=master)](https://travis-ci.org/ceramic-components/ceramic-presentation)
 
 An element providing a starting point for your own reusable Polymer elements.
 
