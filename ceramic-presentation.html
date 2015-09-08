@@ -143,6 +143,13 @@ Example:
          */
         previousSlide: function () {
             this.set('currentSlideIndex', this._getPreviousSlide(this.currentSlideIndex, this.slideCount, this.infinite) || 0);
+        },
+        
+        /**
+         * Change value of infinite
+         */
+        changeInfinite: function() {
+            this.set('infinite', this.infinite ? false : true );
         }
     });
 

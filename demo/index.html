@@ -27,16 +27,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             box-sizing: border-box;
         }
     </style>
-    <button onclick="_onPrevClick()"> slide prec</button>
-    <button onclick="_onNextClick()"> slide suivante</button>
+    <button onclick="_onPrevClick()"> &lt;&lt; </button>
+    <button onclick="_onNextClick()"> &gt;&gt; </button>
+    <br/>
+    <button onclick="_onChangeInfinite()"> Infinie</span></button>
     <ceramic-presentation
             slide-count="{{demoSlideCount}}"
             current-slide-index="{{demoCurrentSlideIndex}}"
             next-slide-index="{{demoNextSlideIndex}}"
             previous-slide-index="{{demoPreviousSlideIndex}}"
+            infinite="{{demoInfinite}}"
             >
-        <ceramic-slide>Slide 1</ceramic-slide>
-        <ceramic-slide>Slide 2</ceramic-slide>
+        <ceramic-slide>Slide 1<br/></ceramic-slide><br/>
+        <ceramic-slide>Slide 2<br/></ceramic-slide><br/>
         <ceramic-slide>Slide 3</ceramic-slide>
     </ceramic-presentation>
     <dl>
@@ -55,6 +58,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <dt>Next slide</dt>
         <dd>{{demoNextSlideIndex}}</dd>
     </dl>
+    <dl>
+        <dt>Infinite</dt>
+        <dd>{{demoInfinite}}</dd>
+    </dl>
     <script>
         function _onNextClick() {
             document.querySelector('ceramic-presentation').nextSlide();
@@ -62,6 +69,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         function _onPrevClick() {
             document.querySelector('ceramic-presentation').previousSlide();
+        }
+        function _onChangeInfinite() {
+            document.querySelector('ceramic-presentation').changeInfinite();
         }
     </script>
 </template>
