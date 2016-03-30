@@ -71,7 +71,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             document.querySelector('ceramic-presentation').previousSlide();
         }
         function _onChangeInfinite() {
-            document.querySelector('ceramic-presentation').changeInfinite();
+            var ceramicObj = document.querySelector('ceramic-presentation');
+            ceramicObj.infinite = ceramicObj.infinite ? false : true;
         }
     </script>
 </template>
