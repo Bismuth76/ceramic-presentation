@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <title>ceramic-presentation Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../ceramic-presentation.html">
+    <link rel="import" href="../ceramic-navigation-keys.html">
 </head>
 <body>
 
@@ -37,11 +38,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             next-slide-index="{{demoNextSlideIndex}}"
             previous-slide-index="{{demoPreviousSlideIndex}}"
             infinite="{{demoInfinite}}"
+            id="demo-presentation"
             >
         <ceramic-slide>Slide 1<br/></ceramic-slide><br/>
         <ceramic-slide>Slide 2<br/></ceramic-slide><br/>
         <ceramic-slide>Slide 3</ceramic-slide>
     </ceramic-presentation>
+    <ceramic-navigation-keys></ceramic-navigation-keys>
     <dl>
         <dt>Total slides</dt>
         <dd>{{demoSlideCount}}</dd>
