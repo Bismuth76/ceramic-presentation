@@ -70,7 +70,7 @@ You can indicate the presentation to control (if there is several `ceramic-prese
                 }
             },
             /**
-             * `nextKey` indicates the `ceramic-presentation` to control
+             * `target` indicates the `ceramic-presentation` to control
              */
             target: {
                 type: Object
@@ -87,12 +87,22 @@ You can indicate the presentation to control (if there is several `ceramic-prese
             }
 
         },
-        _computeNavigationKeys: function(previousKey, nextKey) {
+        
+        /*
+        * Retrive value pass back to navigation key (IE previous-key="down" next-key="up" ==> down up)
+        */
+        _computeNavigationKeys: function(previousKey, nextKey) { 
             return previousKey + ' ' + nextKey;
         },
+        /*
+        * Retrieve value pass back to target (get prensetation to control)
+        */
         _computeTarget: function(target) {
             return Polymer.dom(this).parentNode.querySelector(target) || Polymer.dom(this).parentNode.querySelectorAll('ceramic-presentation');
         },
+        /*
+        * fire even to ceramic navigation
+        */
         _keyPressed: function(event, detail) {
             var action = detail.combo == this.previousKey ? 'previous' : 'next';
             if(this._nodeTarget && this._nodeTarget.length && this._nodeTarget.length > 0) {
