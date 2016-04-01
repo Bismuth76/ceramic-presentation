@@ -1,14 +1,4 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
 
 <!--
 An element to make beautiful presentations.
@@ -32,14 +22,7 @@ Example:
     </style>
 
     <template>
-        <iron-a11y-keys
-            id="keys"
-            keys="left right"
-            target="[[target]]"
-            on-keys-pressed="_moveSlide">
-        </iron-a11y-keys>
-        <content select="ceramic-slide"></content>    
-     
+        <content select="ceramic-slide"></content>
     </template>
 
 </dom-module>
@@ -95,22 +78,11 @@ Example:
                 type: Number,
                 computed: '_getPreviousSlide(currentSlideIndex,slideCount,infinite)',
                 notify: true
-            },
-            
-            /*
-            *  
-            */
-            boundKeys: {
-                type: Array,
-                value:['left','right']
-                },
-      
-            target: {
-                type: Object,
-                value: function() {
-                return document.body;
-                }
             }
+        },
+
+        listeners: {
+            'ceramic-navigation': '_moveSlide'
         },
 
         ready: function () {
@@ -172,16 +144,17 @@ Example:
         },
         
         /**
-         * Move slide with arrows
+         * Move slide
          */
-        _moveSlide: function(event) {
-        if(event.detail.combo =='left'){
-            this.previousSlide();
-           };
-        if(event.detail.combo =='right'){
-            this.nextSlide();
-           };
-       
+        _moveSlide: function(event, detail) {
+            /*event.preventDefault();
+            event.stopPropagation();*/
+            if(detail.action == 'previous'){
+                this.previousSlide();
+            };
+            if(detail.action =='next'){
+                this.nextSlide();
+            };
         }
         
     });

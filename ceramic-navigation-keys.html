@@ -1,0 +1,109 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+
+<!--
+An element to navigate with your keyboard into your presentation.
+
+Example:
+
+    <ceramic-presentation>
+      <ceramic-slide>Slide 1</ceramic-slide>
+      <ceramic-slide>Slide 2</ceramic-slide>
+    </ceramic-presentation>
+    <ceramic-navigation-keys></ceramic-navigation-keys>
+
+You can change the keys to use :
+
+    <ceramic-navigation-keys next-key="up" previous-key="down"></ceramic-navigation-keys>
+
+You can indicate the presentation to control (if there is several `ceramic-presentation` on page) :
+
+    <ceramic-navigation-keys target="#my-presentation"></ceramic-navigation-keys>
+
+
+-->
+<dom-module id="ceramic-navigation-keys">
+    <template>
+        <iron-a11y-keys
+                id="keys"
+                keys="[[_navigationKeys]]"
+                target="[[_ironKeyTarget]]"
+                on-keys-pressed="_keyPressed">
+        </iron-a11y-keys>
+    </template>
+
+</dom-module>
+
+<script>
+
+    Polymer({
+        is: 'ceramic-navigation-keys',
+        properties: {
+            /**
+             * `previousKey` indicates the key to use to navigate to the previous slide into `ceramic-presentation`
+             */
+            previousKey: {
+                type: String,
+                value: 'left'
+            },
+            /**
+             * `nextKey` indicates the key to use to navigate to the next slide into `ceramic-presentation`
+             */
+            nextKey: {
+                type: String,
+                value: 'right'
+            },
+            /**
+             * `_navigationKeys` is the combination of declared keys
+             */
+            _navigationKeys: {
+                type: String,
+                computed: '_computeNavigationKeys(previousKey, nextKey)'
+            },
+            /**
+             * `_ironKeyTarget` is the target passed to `iron-a11y-keys` component
+             */
+            _ironKeyTarget: {
+                type: Object,
+                value: function() {
+                    return document.body;
+                }
+            },
+            /**
+             * `nextKey` indicates the `ceramic-presentation` to control
+             */
+            target: {
+                type: Object
+            },
+            /**
+             * `_nodeTarget` node(s) to dispatch fired event
+             */
+            _nodeTarget: {
+                type: Object,
+                value: function() {
+                    return Polymer.dom(this).parentNode.querySelectorAll('ceramic-presentation');
+                },
+                computed: '_computeTarget(target)'
+            }
+
+        },
+        _computeNavigationKeys: function(previousKey, nextKey) {
+            return previousKey + ' ' + nextKey;
+        },
+        _computeTarget: function(target) {
+            return Polymer.dom(this).parentNode.querySelector(target) || Polymer.dom(this).parentNode.querySelectorAll('ceramic-presentation');
+        },
+        _keyPressed: function(event, detail) {
+            var action = detail.combo == this.previousKey ? 'previous' : 'next';
+            if(this._nodeTarget && this._nodeTarget.length && this._nodeTarget.length > 0) {
+                for(var i=0; i<this._nodeTarget.length; i++) {
+                    this.fire('ceramic-navigation', {action: action}, {node: this._nodeTarget[i]});
+                }
+            }
+            else {
+                this.fire('ceramic-navigation', {action: action}, {node: this._nodeTarget});
+            }
+        }
+    });
+
+</script>

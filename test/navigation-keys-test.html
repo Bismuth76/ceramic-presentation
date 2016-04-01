@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <!-- Step 1: import the element to test -->
+    <link rel="import" href="../ceramic-presentation.html">
+    <link rel="import" href="../ceramic-navigation-keys.html">
+</head>
+<body>
+
+<test-fixture id="simple-fixture">
+    <template>
+        <ceramic-navigation-keys></ceramic-navigation-keys>
+    </template>
+</test-fixture>
+
+<test-fixture id="composed-fixture">
+    <template>
+        <body>
+            <ceramic-presentation id="presentation1">
+                <ceramic-slide></ceramic-slide>
+            </ceramic-presentation>
+
+            <ceramic-presentation id="presentation2">
+                <ceramic-slide></ceramic-slide>
+                <ceramic-slide></ceramic-slide>
+            </ceramic-presentation>
+            <ceramic-navigation-keys id="nav"></ceramic-navigation-keys>
+        </body>
+    </template>
+</test-fixture>
+
+<script>
+
+    suite('ceramic-navigation-keys>', function () {
+
+        suite('Keys', function() {
+            var nav;
+
+            setup(function() {
+                nav = fixture('simple-fixture');
+            });
+
+            test('default values', function () {
+                assert.equal(nav.previousKey, 'left');
+                assert.equal(nav.nextKey, 'right');
+                assert.equal(nav._navigationKeys, 'left right');
+            });
+
+            test('custom values', function (done) {
+                nav.previousKey = 'down';
+                nav.nextKey = 'up';
+                flush(function() {
+                    assert.equal(nav.previousKey, 'down');
+                    assert.equal(nav.nextKey, 'up');
+                    assert.equal(nav._navigationKeys, 'down up');
+                    done();
+                });
+            });
+        });
+
+        suite('Target nodes', function() {
+            setup(function() {
+                var composedFixture = fixture('composed-fixture');
+                nav = document.getElementById('nav');
+            });
+
+            test('default nodes', function () {
+                assert.equal(nav._nodeTarget.length, 2);
+            });
+
+        });
+
+        suite('Firing events', function() {
+
+            setup(function() {
+                var composedFixture = fixture('composed-fixture');
+                nav = document.getElementById('nav');
+                presentation1 = document.getElementById('presentation1');
+            });
+
+            test('next on right', function(done) {
+                presentation1.addEventListener('ceramic-navigation', function(event) {
+                    assert.equal(event.detail.action, 'next');
+                    done();
+                });
+                nav._keyPressed(null, {combo:'right'});
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>
