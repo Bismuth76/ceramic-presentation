@@ -21,9 +21,9 @@ Example:
         }
     </style>
 
-    <template>
-        <content select="ceramic-slide"></content>
-    </template>
+    <!--<template>
+        <!--<content select="ceramic-slide"></content>
+    </template>-->
 
 </dom-module>
 
@@ -88,8 +88,13 @@ Example:
         ready: function () {
             var self = this;
             this.async(function () {
+                
+                var child = this.queryAllEffectiveChildren('ceramic-slide')
+                console.log(child);
+                
                 var content = Polymer.dom(self.root).querySelector('content');
-                self.set('slideCount', Polymer.dom(content).getDistributedNodes().length);
+                console.log(content);
+                self.set('slideCount', child.length);
             });
         },
 

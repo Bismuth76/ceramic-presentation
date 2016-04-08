@@ -13,12 +13,14 @@
 </head>
 <body>
 
+    <!--test wirh no  target-->
 <test-fixture id="simple-fixture">
     <template>
         <ceramic-navigation-keys></ceramic-navigation-keys>
     </template>
 </test-fixture>
 
+    <!--test with two target-->
 <test-fixture id="composed-fixture">
     <template>
         <body>
@@ -29,8 +31,9 @@
             <ceramic-presentation id="presentation2">
                 <ceramic-slide></ceramic-slide>
                 <ceramic-slide></ceramic-slide>
+                 <ceramic-navigation-keys id="nav"></ceramic-navigation-keys>
             </ceramic-presentation>
-            <ceramic-navigation-keys id="nav"></ceramic-navigation-keys>
+           
         </body>
     </template>
 </test-fixture>
