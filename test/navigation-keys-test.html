@@ -13,24 +13,24 @@
 </head>
 <body>
 
+    <!--test wirh no  target-->
 <test-fixture id="simple-fixture">
     <template>
         <ceramic-navigation-keys></ceramic-navigation-keys>
     </template>
 </test-fixture>
 
+    <!--test with two target-->
 <test-fixture id="composed-fixture">
     <template>
         <body>
-            <ceramic-presentation id="presentation1">
-                <ceramic-slide></ceramic-slide>
-            </ceramic-presentation>
 
-            <ceramic-presentation id="presentation2">
+            <ceramic-presentation id="presentation">
                 <ceramic-slide></ceramic-slide>
                 <ceramic-slide></ceramic-slide>
+                 <ceramic-navigation-keys id="nav"></ceramic-navigation-keys>
             </ceramic-presentation>
-            <ceramic-navigation-keys id="nav"></ceramic-navigation-keys>
+           
         </body>
     </template>
 </test-fixture>
@@ -71,7 +71,8 @@
             });
 
             test('default nodes', function () {
-                assert.equal(nav._nodeTarget.length, 2);
+                console.log(nav._nodeTarget.id);
+                assert.equal(nav._nodeTarget.id, 'presentation');
             });
 
         });
@@ -81,11 +82,11 @@
             setup(function() {
                 var composedFixture = fixture('composed-fixture');
                 nav = document.getElementById('nav');
-                presentation1 = document.getElementById('presentation1');
+                presentation = document.getElementById('presentation');
             });
 
             test('next on right', function(done) {
-                presentation1.addEventListener('ceramic-navigation', function(event) {
+                presentation.addEventListener('ceramic-navigation', function(event) {
                     assert.equal(event.detail.action, 'next');
                     done();
                 });

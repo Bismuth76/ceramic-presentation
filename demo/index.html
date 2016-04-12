@@ -26,26 +26,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         :host {
             display: block;
             box-sizing: border-box;
+            
         }
     </style>
-    <button onclick="_onPrevClick()"> &lt;&lt; </button>
-    <button onclick="_onNextClick()"> &gt;&gt; </button>
+    <button onclick="_onPrevClick('demo-presentation1')"> &lt;&lt; </button>
+    <button onclick="_onNextClick('demo-presentation1')"> &gt;&gt; </button>
     <br/>
-    <button onclick="_onChangeInfinite()"> Infinie</span></button>
+    <button onclick="_onChangeInfinite('demo-presentation1')"> <span>Infinie</span></button>
     <ceramic-presentation
             slide-count="{{demoSlideCount}}"
             current-slide-index="{{demoCurrentSlideIndex}}"
             next-slide-index="{{demoNextSlideIndex}}"
             previous-slide-index="{{demoPreviousSlideIndex}}"
             infinite="{{demoInfinite}}"
-            id="demo-presentation"
+            id="demo-presentation1"
             >
         <ceramic-slide>Slide 1<br/></ceramic-slide><br/>
         <ceramic-slide>Slide 2<br/></ceramic-slide><br/>
         <ceramic-slide>Slide 3</ceramic-slide>
     </ceramic-presentation>
-    <ceramic-navigation-keys></ceramic-navigation-keys>
-    <dl>
+     <dl>
         <dt>Total slides</dt>
         <dd>{{demoSlideCount}}</dd>
     </dl>
@@ -65,16 +65,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <dt>Infinite</dt>
         <dd>{{demoInfinite}}</dd>
     </dl>
+      <button onclick="_onPrevClick('demo-presentation2')"> &lt;&lt; </button>
+    <button onclick="_onNextClick('demo-presentation2')"> &gt;&gt; </button>
+    <br/>
+    <button onclick="_onChangeInfinite('demo-presentation2')"> <span>Infinie</span></button>
+        <ceramic-presentation
+            slide-count="{{demo2SlideCount}}"
+            current-slide-index="{{demo2CurrentSlideIndex}}"
+            next-slide-index="{{demo2NextSlideIndex}}"
+            previous-slide-index="{{demo2PreviousSlideIndex}}"
+            infinite="{{demo2Infinite}}"
+            id="demo-presentation2"
+            >
+        <ceramic-slide>Slide 1<br/></ceramic-slide><br/>
+        <ceramic-slide>Slide 2<br/></ceramic-slide><br/>
+        <ceramic-slide>Slide 3<br/></ceramic-slide><br/>
+        <ceramic-slide>Slide 4<br/></ceramic-slide><br/>
+        <ceramic-slide>Slide 5<br/></ceramic-slide><br/>
+        <ceramic-slide>Slide 6</ceramic-slide>
+            <ceramic-navigation-keys target="#demo-presentation2"></ceramic-navigation-keys>
+    </ceramic-presentation>
+    
+    <dl>
+        <dt>Total slides</dt>
+        <dd>{{demo2SlideCount}}</dd>
+    </dl>
+    <dl>
+        <dt>Current slide</dt>
+        <dd>{{demo2CurrentSlideIndex}}</dd>
+    </dl>
+    <dl>
+        <dt>Previous slide</dt>
+        <dd>{{demo2PreviousSlideIndex}}</dd>
+    </dl>
+    <dl>
+        <dt>Next slide</dt>
+        <dd>{{demo2NextSlideIndex}}</dd>
+    </dl>
+    <dl>
+        <dt>Infinite</dt>
+        <dd>{{demo2Infinite}}</dd>
+    </dl>
     <script>
-        function _onNextClick() {
-            document.querySelector('ceramic-presentation').nextSlide();
+        function _onNextClick(elementId) {
+            document.getElementById(elementId).nextSlide();
         }
 
-        function _onPrevClick() {
-            document.querySelector('ceramic-presentation').previousSlide();
+        function _onPrevClick(elementId) {
+            document.getElementById(elementId).previousSlide();
         }
-        function _onChangeInfinite() {
-            var ceramicObj = document.querySelector('ceramic-presentation');
+        function _onChangeInfinite(elementId) {
+            var ceramicObj = document.getElementById(elementId);
             ceramicObj.infinite = ceramicObj.infinite ? false : true;
         }
     </script>

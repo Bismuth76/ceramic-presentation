@@ -3,24 +3,16 @@
 
 <!--
 An element to navigate with your keyboard into your presentation.
-
 Example:
-
     <ceramic-presentation>
       <ceramic-slide>Slide 1</ceramic-slide>
       <ceramic-slide>Slide 2</ceramic-slide>
     </ceramic-presentation>
     <ceramic-navigation-keys></ceramic-navigation-keys>
-
 You can change the keys to use :
-
     <ceramic-navigation-keys next-key="up" previous-key="down"></ceramic-navigation-keys>
-
 You can indicate the presentation to control (if there is several `ceramic-presentation` on page) :
-
     <ceramic-navigation-keys target="#my-presentation"></ceramic-navigation-keys>
-
-
 -->
 <dom-module id="ceramic-navigation-keys">
     <template>
@@ -35,7 +27,6 @@ You can indicate the presentation to control (if there is several `ceramic-prese
 </dom-module>
 
 <script>
-
     Polymer({
         is: 'ceramic-navigation-keys',
         properties: {
@@ -70,7 +61,7 @@ You can indicate the presentation to control (if there is several `ceramic-prese
                 }
             },
             /**
-             * `nextKey` indicates the `ceramic-presentation` to control
+             * `target` indicates the `ceramic-presentation` to control
              */
             target: {
                 type: Object
@@ -81,18 +72,27 @@ You can indicate the presentation to control (if there is several `ceramic-prese
             _nodeTarget: {
                 type: Object,
                 value: function() {
-                    return Polymer.dom(this).parentNode.querySelectorAll('ceramic-presentation');
+                    return Polymer.dom(this).parentNode;
                 },
                 computed: '_computeTarget(target)'
             }
-
         },
-        _computeNavigationKeys: function(previousKey, nextKey) {
+        
+        /*
+        * Retrive value pass back to navigation key (IE previous-key="down" next-key="up" ==> down up)
+        */
+        _computeNavigationKeys: function(previousKey, nextKey) { 
             return previousKey + ' ' + nextKey;
         },
+        /*
+        * Retrieve value pass back to target (get prensetation to control)
+        */
         _computeTarget: function(target) {
-            return Polymer.dom(this).parentNode.querySelector(target) || Polymer.dom(this).parentNode.querySelectorAll('ceramic-presentation');
+            return Polymer.dom(this).parentNode || Polymer.dom(this).parentNode;
         },
+        /*
+        * fire even to ceramic navigation
+        */
         _keyPressed: function(event, detail) {
             var action = detail.combo == this.previousKey ? 'previous' : 'next';
             if(this._nodeTarget && this._nodeTarget.length && this._nodeTarget.length > 0) {
@@ -105,5 +105,4 @@ You can indicate the presentation to control (if there is several `ceramic-prese
             }
         }
     });
-
 </script>
